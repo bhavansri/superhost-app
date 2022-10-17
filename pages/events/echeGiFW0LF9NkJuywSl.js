@@ -7,24 +7,16 @@ import InvitationCard from '../../components/InvitationCard'
 import { useRouter } from 'next/router'
 import PlainTextCard from '../../components/PlainTextCard'
 
-const Event = ({ eventID, event }) => {
+const Event = ({ event }) => {
   const router = useRouter()
-
-  const onRSVPButtonPress = () => {
-    router.push({
-      pathname: '/event-rsvp',
-      query: {
-        eventID: eventID,
-        event: JSON.stringify(event)
-      }
-    })
-  }
-
-  const RSVPToEventButton = () => (
-    <button className="text-white btn btn-block btn-primary" onClick={onRSVPButtonPress}>
+  const eventID ='echeGiFW0LF9NkJuywSl'
+  const GetDirectionsButton = () => (
+    <a target={"_blank"} href="https://goo.gl/maps/99icEhda4RGzGpho8" rel="noreferrer">
+    <button className="text-white btn btn-block btn-primary">
       <SparklesIcon className='w-5 h-5 mr-2' />
-      RSVP to Event
+      Get Directions
     </button>
+    </a>
   )
 
   return (
@@ -40,10 +32,10 @@ const Event = ({ eventID, event }) => {
         <meta property="og:description" content={event.location} key="ogdesc" />
       </Head>
       {
-        event.type === 'portrait' && <InvitationCard title={event.eventTitle} imageURL={event.imageURL} location={event.location} startDate={event.startDate} endDate={event.endDate} primaryButton={<RSVPToEventButton />} isPortraitImage={true} />
+        event.type === 'portrait' && <InvitationCard title={event.eventTitle} imageURL={event.imageURL} location={event.location} startDate={event.startDate} endDate={event.endDate} primaryButton={<GetDirectionsButton />} isPortraitImage={true} />
       }
       {
-        event.type === 'landscape' && <InvitationCard title={event.eventTitle} imageURL={event.imageURL} location={event.location} startDate={event.startDate} endDate={event.endDate} primaryButton={<RSVPToEventButton />} isPortraitImage={false} />
+        event.type === 'landscape' && <InvitationCard title={event.eventTitle} imageURL={event.imageURL} location={event.location} startDate={event.startDate} endDate={event.endDate} primaryButton={<GetDirectionsButton />} isPortraitImage={false} />
       }
       {
         event.type === 'plainText' && <PlainTextCard titlePos={JSON.parse(event.designProps.titlePos)} detailsPos={JSON.parse(event.designProps.detailsPos)} title={event.eventTitle} titleFont={event.designProps.titleFont} titleColor={event.designProps.titleColor} fontSize={event.designProps.fontSize} backgroundURL={event.cardBackground} startDate={event.startDate} endDate={event.endDate} location={event.location} onRSVP={onRSVPButtonPress} />
@@ -53,7 +45,7 @@ const Event = ({ eventID, event }) => {
 }
 
 export async function getServerSideProps(context) {
-  const eventID = context.params.id
+  const eventID = "echeGiFW0LF9NkJuywSl"
   const eventRef = doc(db, "events", eventID)
   const eventSnap = await getDoc(eventRef)
   
